@@ -21,9 +21,9 @@ export default function ArgumentSlot({
     return (
       <button
         onClick={onOpen}
-        className="inline-flex items-center gap-1 px-2 py-0.5 rounded border border-dashed border-slate-600 text-slate-500 text-xs hover:border-violet-500 hover:text-violet-400 transition-colors"
+        className="inline-flex items-center gap-1 px-2 py-0.5 border border-dashed border-text-muted text-text-muted text-xs font-mono hover:border-accent hover:text-accent transition-colors"
       >
-        <span className="text-violet-500">+</span>
+        <span className="text-accent">+</span>
         <span>
           {paramName}: {paramType}
         </span>
@@ -35,13 +35,13 @@ export default function ArgumentSlot({
     switch (node.type) {
       case "literal":
         return (
-          <span className="text-amber-400 font-mono text-xs">
+          <span className="text-value-amber font-mono text-xs">
             {node.value === null ? "null" : typeof node.value === "string" ? `"${node.value}"` : String(node.value)}
           </span>
         );
       case "attribute":
         return (
-          <span className="text-cyan-400 font-mono text-xs">{node.path}</span>
+          <span className="text-code-blue font-mono text-xs">{node.path}</span>
         );
       case "function":
         return null;
@@ -57,10 +57,10 @@ export default function ArgumentSlot({
         {inline}
         <button
           onClick={onClear}
-          className="text-slate-600 hover:text-red-400 text-[10px] opacity-0 group-hover:opacity-100 transition-opacity"
+          className="text-text-muted hover:text-error text-[10px] opacity-0 group-hover:opacity-100 transition-all"
           title="Remove"
         >
-          ✕
+          x
         </button>
       </span>
     );

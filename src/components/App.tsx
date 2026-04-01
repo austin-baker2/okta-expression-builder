@@ -10,10 +10,10 @@ export default function App() {
 
   return (
     <ExpressionContext.Provider value={state}>
-      <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col">
+      <div className="min-h-screen bg-bg-deep text-text flex flex-col">
         <Header />
-        <div className="flex flex-1 overflow-hidden">
-          <main className="flex-1 pb-16 overflow-y-auto">
+        <div className="relative flex-1 overflow-hidden">
+          <main className="h-full pb-16 overflow-y-auto">
             {state.mode === "easy" ? <TreeBuilder /> : <CodeEditor />}
           </main>
           <ProfilePanel />

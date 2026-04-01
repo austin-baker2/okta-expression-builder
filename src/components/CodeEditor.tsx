@@ -91,13 +91,15 @@ export default function CodeEditor() {
   })();
 
   return (
-    <div className="p-4 h-full flex flex-col">
-      <div className="flex items-center justify-between mb-3">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+    <div className="p-5 h-full flex flex-col">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-[10px] font-mono uppercase tracking-widest text-text-muted">
           Expression Editor
         </h2>
         {parseError && (
-          <span className="text-xs text-red-400">{parseError}</span>
+          <span className="text-xs font-mono text-error px-2 py-0.5 bg-error-dim border border-error/20">
+            {parseError}
+          </span>
         )}
       </div>
       <div className="relative flex-1">
@@ -107,20 +109,20 @@ export default function CodeEditor() {
           onChange={(e) => handleChange(e.target.value)}
           onKeyDown={handleKeyDown}
           onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
-          placeholder='Start typing... e.g. String.toUpperCase(user.email) or user.firstName + " " + user.lastName'
+          placeholder='Start typing... e.g. String.toUpperCase(user.email)'
           spellCheck={false}
-          className="w-full h-full min-h-[200px] bg-slate-900 border border-slate-800 rounded-lg px-4 py-3 font-mono text-sm text-emerald-400 placeholder-slate-600 resize-none focus:outline-none focus:border-violet-600"
+          className="w-full h-full min-h-[200px] bg-bg-surface border border-border px-4 py-3 font-mono text-sm text-code-green placeholder-text-muted resize-none focus:outline-none focus:border-accent transition-colors"
         />
         {showSuggestions && (
-          <div className="absolute left-4 top-12 z-30 bg-slate-800 border border-slate-700 rounded-md shadow-lg max-h-48 overflow-y-auto">
+          <div className="absolute left-4 top-12 z-30 bg-bg-elevated border border-border shadow-xl max-h-48 overflow-y-auto">
             {suggestions.map((s, i) => (
               <button
                 key={s}
                 onClick={() => applySuggestion(s)}
-                className={`w-full text-left px-3 py-1.5 text-xs font-mono ${
+                className={`w-full text-left px-3 py-2 text-xs font-mono transition-colors ${
                   i === selectedSuggestion
-                    ? "bg-violet-600 text-white"
-                    : "text-slate-300 hover:bg-slate-700"
+                    ? "bg-accent text-bg-deep"
+                    : "text-text-secondary hover:bg-bg-hover"
                 }`}
               >
                 {s}
@@ -130,15 +132,17 @@ export default function CodeEditor() {
         )}
       </div>
       {selectedFn && (
-        <div className="mt-3 p-3 bg-slate-900 border border-slate-800 rounded-lg">
-          <div className="text-xs font-mono text-violet-400">{selectedFn.name}</div>
-          <p className="text-xs text-slate-500 mt-1">{selectedFn.description}</p>
-          <p className="text-[10px] text-slate-600 font-mono mt-1">
-            ({selectedFn.parameters.map((p) => `${p.name}: ${p.type}`).join(", ")}) →{" "}
-            {selectedFn.returnType}
-          </p>
-          <p className="text-[10px] text-slate-600 font-mono mt-0.5">
-            Example: {selectedFn.example}
+        <div className="mt-4 p-4 bg-bg-surface border border-border">
+          <div className="flex items-baseline gap-2">
+            <span className="text-xs font-mono text-accent">{selectedFn.name}</span>
+            <span className="text-[10px] font-mono text-text-muted">
+              ({selectedFn.parameters.map((p) => `${p.name}: ${p.type}`).join(", ")}) &rarr;{" "}
+              {selectedFn.returnType}
+            </span>
+          </div>
+          <p className="text-xs text-text-secondary mt-1.5">{selectedFn.description}</p>
+          <p className="text-[10px] text-text-muted font-mono mt-1.5 border-t border-border-subtle pt-1.5">
+            {selectedFn.example}
           </p>
         </div>
       )}

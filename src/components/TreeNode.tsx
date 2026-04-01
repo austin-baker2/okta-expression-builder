@@ -16,8 +16,8 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
 
   if (node.type === "literal") {
     return (
-      <div className="inline-flex items-center gap-1 group" style={{ marginLeft: depth * 24 }}>
-        <span className="text-amber-400 font-mono text-sm">
+      <div className="inline-flex items-center gap-2 group" style={{ marginLeft: depth * 24 }}>
+        <span className="text-value-amber font-mono text-sm">
           {node.value === null
             ? "null"
             : typeof node.value === "string"
@@ -26,9 +26,9 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
         </span>
         <button
           onClick={onDelete}
-          className="text-slate-600 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+          className="text-text-muted hover:text-error text-xs opacity-0 group-hover:opacity-100 transition-all"
         >
-          ✕
+          x
         </button>
       </div>
     );
@@ -36,13 +36,13 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
 
   if (node.type === "attribute") {
     return (
-      <div className="inline-flex items-center gap-1 group" style={{ marginLeft: depth * 24 }}>
-        <span className="text-cyan-400 font-mono text-sm">{node.path}</span>
+      <div className="inline-flex items-center gap-2 group" style={{ marginLeft: depth * 24 }}>
+        <span className="text-code-blue font-mono text-sm">{node.path}</span>
         <button
           onClick={onDelete}
-          className="text-slate-600 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+          className="text-text-muted hover:text-error text-xs opacity-0 group-hover:opacity-100 transition-all"
         >
-          ✕
+          x
         </button>
       </div>
     );
@@ -98,11 +98,12 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
     return (
       <div style={{ marginLeft: depth * 24 }}>
         <div className="flex items-center gap-2 group">
-          <div className="bg-indigo-950 border border-indigo-700 rounded-lg px-3 py-1.5 font-mono text-sm text-violet-300">
-            <span>{node.name}(</span>
+          <div className="bg-bg-elevated border border-border px-3 py-2 font-mono text-sm text-accent">
+            <span className="text-text-secondary">{node.name}</span>
+            <span className="text-text-muted">(</span>
             {params.map((param, i) => (
               <span key={i}>
-                {i > 0 && <span className="text-slate-600">, </span>}
+                {i > 0 && <span className="text-text-muted">, </span>}
                 {node.arguments[i] && node.arguments[i].type !== "function" ? (
                   <ArgumentSlot
                     node={node.arguments[i]}
@@ -122,17 +123,17 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
                     onNodeOpen={() => {}}
                   />
                 ) : (
-                  <span className="text-indigo-400">▼</span>
+                  <span className="text-accent">&#9660;</span>
                 )}
               </span>
             ))}
-            <span>)</span>
+            <span className="text-text-muted">)</span>
           </div>
           <button
             onClick={onDelete}
-            className="text-slate-600 hover:text-red-400 text-xs opacity-0 group-hover:opacity-100 transition-opacity"
+            className="text-text-muted hover:text-error text-xs opacity-0 group-hover:opacity-100 transition-all"
           >
-            ✕
+            x
           </button>
         </div>
 
@@ -140,7 +141,7 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
           node.arguments[i] && node.arguments[i].type === "function" ? (
             <div key={i} className="mt-1">
               <div
-                className="border-l-2 border-indigo-800 ml-4 pl-0"
+                className="border-l border-border ml-4"
                 style={{ marginLeft: 16 }}
               >
                 <TreeNode
@@ -169,8 +170,9 @@ export default function TreeNode({ node, depth, onChange, onDelete }: TreeNodePr
   if (node.type === "operator") {
     return (
       <div style={{ marginLeft: depth * 24 }}>
-        <div className="text-slate-400 font-mono text-sm">
-          Operator: {node.operator}
+        <div className="text-text-muted font-mono text-sm">
+          <span className="text-[10px] uppercase tracking-widest">op</span>{" "}
+          <span className="text-value-amber">{node.operator}</span>
         </div>
         {node.operands.map((operand, i) => (
           <TreeNode

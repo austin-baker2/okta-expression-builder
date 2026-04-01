@@ -22,16 +22,16 @@ export default function ProfilePanel() {
   };
 
   return (
-    <div className="w-72 shrink-0 border-l border-slate-800 bg-slate-950 overflow-y-auto">
-      <div className="p-3 border-b border-slate-800">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+    <div className="absolute top-0 right-0 bottom-0 w-72 border-l border-border bg-bg-deep overflow-y-auto pb-16 z-30 shadow-2xl">
+      <div className="px-4 py-3 border-b border-border">
+        <h2 className="text-[10px] font-mono uppercase tracking-widest text-text-muted">
           Test Profile
         </h2>
       </div>
-      <div className="p-3 space-y-2">
+      <div className="p-4 space-y-3">
         {profileSchema.map((attr) => (
           <div key={attr.key}>
-            <label className="block text-[10px] text-slate-500 mb-0.5">
+            <label className="block text-[10px] font-mono text-text-muted mb-1 tracking-wide">
               {attr.key}
             </label>
             <input
@@ -39,46 +39,48 @@ export default function ProfilePanel() {
               value={profile[attr.key] === null ? "" : String(profile[attr.key] ?? "")}
               onChange={(e) => updateProfileField(attr.key, e.target.value)}
               placeholder="null"
-              className="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs font-mono text-violet-300 placeholder-slate-700 focus:outline-none focus:border-violet-600"
+              className="w-full bg-bg-surface border border-border-subtle px-2.5 py-1.5 text-xs font-mono text-text placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
             />
           </div>
         ))}
 
         {customKeys.map((key) => (
           <div key={key}>
-            <label className="block text-[10px] text-slate-500 mb-0.5">
-              {key} <span className="text-violet-600">(custom)</span>
+            <label className="block text-[10px] font-mono text-text-muted mb-1">
+              {key} <span className="text-accent">(custom)</span>
             </label>
             <input
               type="text"
               value={profile[key] === null ? "" : String(profile[key] ?? "")}
               onChange={(e) => updateProfileField(key, e.target.value)}
               placeholder="null"
-              className="w-full bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs font-mono text-violet-300 placeholder-slate-700 focus:outline-none focus:border-violet-600"
+              className="w-full bg-bg-surface border border-border-subtle px-2.5 py-1.5 text-xs font-mono text-text placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
             />
           </div>
         ))}
 
-        <div className="pt-3 border-t border-slate-800">
-          <p className="text-[10px] text-slate-500 mb-2">Add custom attribute</p>
+        <div className="pt-4 border-t border-border">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-text-muted mb-2">
+            Add custom attribute
+          </p>
           <div className="flex gap-1">
             <input
               type="text"
               value={newKey}
               onChange={(e) => setNewKey(e.target.value)}
               placeholder="key"
-              className="flex-1 bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs font-mono text-slate-300 placeholder-slate-700 focus:outline-none focus:border-violet-600"
+              className="flex-1 bg-bg-surface border border-border-subtle px-2 py-1.5 text-xs font-mono text-text placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
             />
             <input
               type="text"
               value={newValue}
               onChange={(e) => setNewValue(e.target.value)}
               placeholder="value"
-              className="flex-1 bg-slate-900 border border-slate-800 rounded px-2 py-1 text-xs font-mono text-slate-300 placeholder-slate-700 focus:outline-none focus:border-violet-600"
+              className="flex-1 bg-bg-surface border border-border-subtle px-2 py-1.5 text-xs font-mono text-text placeholder-text-muted focus:outline-none focus:border-accent transition-colors"
             />
             <button
               onClick={handleAddCustom}
-              className="px-2 py-1 text-xs bg-violet-600 text-white rounded hover:bg-violet-500 transition-colors"
+              className="px-2.5 py-1.5 text-xs font-mono bg-accent text-bg-deep hover:bg-accent-hover transition-colors"
             >
               +
             </button>

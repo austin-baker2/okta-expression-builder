@@ -1,1 +1,78 @@
 @import "tailwindcss";
+
+@theme {
+  /* Warm Workshop palette */
+  --color-bg-deep: #0f0e0c;
+  --color-bg-surface: #1a1816;
+  --color-bg-elevated: #242120;
+  --color-bg-hover: #2d2926;
+  --color-border: #332f2b;
+  --color-border-subtle: #2a2723;
+  --color-border-active: #c8956c;
+
+  --color-text: #e6ddd3;
+  --color-text-secondary: #9b9088;
+  --color-text-muted: #635c56;
+
+  --color-accent: #c8956c;
+  --color-accent-hover: #d9a97e;
+  --color-accent-dim: rgba(200, 149, 108, 0.15);
+
+  --color-code-green: #8ab87a;
+  --color-code-blue: #7ba7c4;
+  --color-value-amber: #d4a44e;
+  --color-error: #c45c52;
+  --color-error-dim: rgba(196, 92, 82, 0.15);
+
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "Consolas", monospace;
+}
+
+/* Base */
+html {
+  background: var(--color-bg-deep);
+  color: var(--color-text);
+  font-family: var(--font-display);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Grain overlay */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 1px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+/* Selection */
+::selection {
+  background: var(--color-accent-dim);
+  color: var(--color-text);
+}

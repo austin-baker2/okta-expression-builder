@@ -30,13 +30,17 @@ export default function TreeBuilder() {
 
   if (!tree) {
     return (
-      <div className="flex flex-col items-center justify-center h-full min-h-[300px] gap-4">
-        <p className="text-slate-500 text-sm">Start building your expression</p>
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] gap-6">
+        <div className="text-center">
+          <p className="text-text-muted text-sm font-mono mb-1">No expression yet</p>
+          <p className="text-text-muted/50 text-xs font-mono">Select a function to begin</p>
+        </div>
         <button
           onClick={() => setCatalogOpen(true)}
-          className="px-4 py-2 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-500 transition-colors"
+          className="group px-6 py-3 border border-border text-sm font-mono uppercase tracking-widest text-text-secondary hover:text-accent hover:border-accent hover:bg-accent-dim transition-all duration-200"
         >
-          + Add Function
+          <span className="text-accent mr-2">+</span>
+          Add Function
         </button>
         {catalogOpen && (
           <FunctionCatalog
@@ -51,14 +55,14 @@ export default function TreeBuilder() {
   }
 
   return (
-    <div className="p-4">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xs font-semibold text-slate-400 uppercase tracking-wider">
+    <div className="p-5">
+      <div className="flex items-center justify-between mb-5">
+        <h2 className="text-[10px] font-mono uppercase tracking-widest text-text-muted">
           Expression Tree
         </h2>
         <button
           onClick={() => setTree(null)}
-          className="text-xs text-slate-500 hover:text-red-400 transition-colors"
+          className="text-[10px] font-mono uppercase tracking-widest text-text-muted hover:text-error transition-colors"
         >
           Clear
         </button>

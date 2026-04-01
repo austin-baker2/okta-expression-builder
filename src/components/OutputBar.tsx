@@ -16,38 +16,46 @@ export default function OutputBar() {
   const isEmpty = !expressionString;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 border-t border-slate-800 bg-slate-950 px-4 py-3 z-50">
+    <div className="fixed bottom-0 left-0 right-0 border-t border-border bg-bg-deep px-5 py-3 z-50">
       <div className="flex items-center justify-between gap-4">
         <div className="flex items-center gap-3 min-w-0 flex-1">
           {isEmpty ? (
-            <span className="text-slate-600 text-sm italic">
+            <span className="text-text-muted text-sm font-mono italic">
               Build an expression to see output...
             </span>
           ) : (
             <>
-              <code className="text-emerald-400 text-sm font-mono truncate">
-                {expressionString}
-              </code>
+              <div className="flex items-center gap-2 min-w-0">
+                <span className="text-text-muted text-[10px] font-mono uppercase tracking-widest shrink-0">out</span>
+                <code className="text-code-green text-sm font-mono truncate">
+                  {expressionString}
+                </code>
+              </div>
               {evalResult && (
                 <>
-                  <span className="text-slate-700">|</span>
+                  <span className="text-border shrink-0">/</span>
                   {evalResult.ok ? (
-                    <span className="text-amber-400 text-sm font-mono shrink-0">
-                      → {String(evalResult.value)}
+                    <span className="text-value-amber text-sm font-mono shrink-0">
+                      {String(evalResult.value)}
                     </span>
                   ) : (
-                    <span className="text-red-400 text-sm font-mono shrink-0">
+                    <span className="text-error text-sm font-mono shrink-0">
                       {evalResult.error}
                     </span>
                   )}
                 </>
               )}
               {hasErrors ? (
-                <span className="text-red-400 text-xs shrink-0" title={validationErrors[0].message}>
-                  ✗ {validationErrors[0].message}
+                <span
+                  className="text-error text-xs font-mono shrink-0 px-2 py-0.5 bg-error-dim border border-error/20"
+                  title={validationErrors[0].message}
+                >
+                  {validationErrors[0].message}
                 </span>
               ) : !isEmpty ? (
-                <span className="text-emerald-500 text-xs shrink-0">✓ Valid</span>
+                <span className="text-code-green text-xs font-mono shrink-0 px-2 py-0.5 bg-code-green/10 border border-code-green/20">
+                  valid
+                </span>
               ) : null}
             </>
           )}
@@ -55,9 +63,9 @@ export default function OutputBar() {
         <button
           onClick={handleCopy}
           disabled={isEmpty}
-          className="shrink-0 px-4 py-1.5 text-sm font-medium rounded-md bg-violet-600 text-white hover:bg-violet-500 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="shrink-0 px-5 py-1.5 text-xs font-mono uppercase tracking-wider bg-accent text-bg-deep font-medium hover:bg-accent-hover disabled:opacity-30 disabled:cursor-not-allowed transition-colors duration-200"
         >
-          {copied ? "Copied!" : "Copy"}
+          {copied ? "Copied" : "Copy"}
         </button>
       </div>
     </div>
