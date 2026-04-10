@@ -25,8 +25,8 @@ describe("AppProfileData types", () => {
 });
 
 describe("hrisPresets", () => {
-  it("exports 5 presets", () => {
-    expect(hrisPresets).toHaveLength(5);
+  it("exports 4 presets", () => {
+    expect(hrisPresets).toHaveLength(4);
   });
 
   it("each preset has id, name, and non-empty attributes", () => {
@@ -37,36 +37,37 @@ describe("hrisPresets", () => {
     }
   });
 
-  it("includes Workday preset with expected attributes", () => {
+  it("includes Workday preset with confirmed base profile attributes", () => {
     const workday = hrisPresets.find((p) => p.id === "workday");
     expect(workday).toBeDefined();
-    expect(workday!.attributes.workerID).toBeDefined();
-    expect(workday!.attributes.department).toBeDefined();
     expect(workday!.attributes.employeeID).toBeDefined();
+    expect(workday!.attributes.businessTitle).toBeDefined();
+    expect(workday!.attributes.supervisoryOrg).toBeDefined();
+    expect(workday!.attributes.managerUserName).toBeDefined();
   });
 
-  it("includes BambooHR preset", () => {
-    const bamboo = hrisPresets.find((p) => p.id === "bamboohr");
-    expect(bamboo).toBeDefined();
-    expect(bamboo!.attributes.employeeId).toBeDefined();
-  });
-
-  it("includes SAP SuccessFactors preset", () => {
+  it("includes SAP SuccessFactors preset with snake_case attributes", () => {
     const sap = hrisPresets.find((p) => p.id === "successfactors");
     expect(sap).toBeDefined();
-    expect(sap!.attributes.personIdExternal).toBeDefined();
+    expect(sap!.attributes.person_id_external).toBeDefined();
+    expect(sap!.attributes.employee_class).toBeDefined();
+    expect(sap!.attributes.business_unit).toBeDefined();
   });
 
-  it("includes UKG Pro preset", () => {
+  it("includes UKG Pro preset with report template attributes", () => {
     const ukg = hrisPresets.find((p) => p.id === "ukgpro");
     expect(ukg).toBeDefined();
-    expect(ukg!.attributes.employeeId).toBeDefined();
+    expect(ukg!.attributes.employeeNumber).toBeDefined();
+    expect(ukg!.attributes.eepPersonID).toBeDefined();
+    expect(ukg!.attributes.lastHireDate).toBeDefined();
   });
 
-  it("includes Aquera (ADP) preset", () => {
+  it("includes Aquera (ADP) preset with confirmed attributes", () => {
     const aquera = hrisPresets.find((p) => p.id === "aquera");
     expect(aquera).toBeDefined();
     expect(aquera!.attributes.associateOID).toBeDefined();
+    expect(aquera!.attributes.workerID).toBeDefined();
+    expect(aquera!.attributes.workerTypeCode).toBeDefined();
   });
 
   it("all attribute values are strings", () => {

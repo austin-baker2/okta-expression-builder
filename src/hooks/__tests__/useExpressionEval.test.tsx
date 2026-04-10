@@ -20,9 +20,9 @@ describe("useExpression app profile evaluation", () => {
       result.current.loadPreset("workday");
     });
     act(() => {
-      result.current.setTree(parse("app.department"));
+      result.current.setTree(parse("app.businessTitle"));
     });
-    expect(result.current.evalResult).toEqual({ ok: true, value: "Engineering" });
+    expect(result.current.evalResult).toEqual({ ok: true, value: "Software Engineer" });
   });
 
   it("evaluates user + app mixed expression", () => {
@@ -31,8 +31,8 @@ describe("useExpression app profile evaluation", () => {
       result.current.loadPreset("workday");
     });
     act(() => {
-      result.current.setTree(parse('user.firstName + " @ " + app.department'));
+      result.current.setTree(parse('user.firstName + " @ " + app.businessUnit'));
     });
-    expect(result.current.evalResult).toEqual({ ok: true, value: "Jane @ Engineering" });
+    expect(result.current.evalResult).toEqual({ ok: true, value: "Jane @ Product Development" });
   });
 });
