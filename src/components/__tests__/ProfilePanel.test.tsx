@@ -52,7 +52,6 @@ describe("ProfilePanel", () => {
     renderWithState();
     fireEvent.click(screen.getByText("App"));
     expect(screen.getByText("Workday")).toBeInTheDocument();
-    expect(screen.getByText("BambooHR")).toBeInTheDocument();
     expect(screen.getByText("SAP SuccessFactors")).toBeInTheDocument();
     expect(screen.getByText("UKG Pro")).toBeInTheDocument();
     expect(screen.getByText("Aquera (ADP)")).toBeInTheDocument();

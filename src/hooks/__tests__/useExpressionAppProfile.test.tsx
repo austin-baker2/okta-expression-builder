@@ -29,8 +29,8 @@ describe("useExpression app profile", () => {
       result.current.loadPreset("workday");
     });
     expect(result.current.activePreset).toBe("workday");
-    expect(result.current.appProfile.workerID).toEqual({
-      value: "WD-100042",
+    expect(result.current.appProfile.employeeID).toEqual({
+      value: "EMP-2024-0815",
       source: "preset",
     });
   });
@@ -44,13 +44,13 @@ describe("useExpression app profile", () => {
       result.current.addCustomAppField("myCustom", "customVal");
     });
     act(() => {
-      result.current.loadPreset("bamboohr");
+      result.current.loadPreset("ukgpro");
     });
     // Workday-specific attr gone
-    expect(result.current.appProfile.workerID).toBeUndefined();
-    // BambooHR attr present
-    expect(result.current.appProfile.employeeId).toBeDefined();
-    expect(result.current.appProfile.employeeId.source).toBe("preset");
+    expect(result.current.appProfile.employeeID).toBeUndefined();
+    // UKG attr present
+    expect(result.current.appProfile.employeeNumber).toBeDefined();
+    expect(result.current.appProfile.employeeNumber.source).toBe("preset");
     // Custom preserved
     expect(result.current.appProfile.myCustom).toEqual({
       value: "customVal",
@@ -64,9 +64,9 @@ describe("useExpression app profile", () => {
       result.current.loadPreset("workday");
     });
     act(() => {
-      result.current.updateAppProfileField("department", "Sales");
+      result.current.updateAppProfileField("businessTitle", "Senior Engineer");
     });
-    expect(result.current.appProfile.department.value).toBe("Sales");
+    expect(result.current.appProfile.businessTitle.value).toBe("Senior Engineer");
   });
 
   it("addCustomAppField adds with source 'custom'", () => {
