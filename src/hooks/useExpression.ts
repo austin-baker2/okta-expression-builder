@@ -87,8 +87,8 @@ export function useExpressionState(): ExpressionState {
 
   const evalResult = useMemo(() => {
     if (!tree) return null;
-    return evaluate(tree, profile);
-  }, [tree, profile]);
+    return evaluate(tree, profile, appProfile);
+  }, [tree, profile, appProfile]);
 
   const validationErrors = useMemo(() => {
     if (!tree) return [];
