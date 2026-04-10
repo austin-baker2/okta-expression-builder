@@ -12,7 +12,6 @@ export default function OutputBar() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const hasErrors = validationErrors.length > 0 || parseError !== null;
   const isEmpty = !expressionString && !parseError;
 
   return (

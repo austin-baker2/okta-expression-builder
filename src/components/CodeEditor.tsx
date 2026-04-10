@@ -46,7 +46,7 @@ export default function CodeEditor() {
           position: err.position ?? 0,
           length: err.length ?? 1,
           hint: err.hint,
-        });
+        } satisfies ParseError);
       }
 
       const lastToken = value.split(/[\s(,]+/).pop() ?? "";
