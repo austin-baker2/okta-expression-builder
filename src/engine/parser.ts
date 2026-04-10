@@ -1,14 +1,23 @@
-import type { ExpressionNode } from "../types/expression";
+import type { ExpressionNode, ParseError } from "../types/expression";
 
 export function parse(input: string): ExpressionNode {
   const trimmed = input.trim();
-  if (!trimmed) throw new Error("Empty expression");
+  if (!trimmed) {
+    const err = new Error("Empty expression") as Error & ParseError;
+    err.position = 0;
+    err.length = 1;
+    throw err;
+  }
 
   const parser = new Parser(trimmed);
   const result = parser.parseExpression();
   parser.skipWhitespace();
   if (parser.pos < parser.input.length) {
-    throw new Error(`Unexpected characters at position ${parser.pos}`);
+    throw parser.error(
+      `Unexpected characters at position ${parser.pos}`,
+      parser.pos,
+      parser.input.length - parser.pos
+    );
   }
   return result;
 }
@@ -20,6 +29,14 @@ class Parser {
   constructor(input: string) {
     this.input = input;
     this.pos = 0;
+  }
+
+  error(message: string, position: number, length: number = 1, hint?: string): Error & ParseError {
+    const err = new Error(message) as Error & ParseError;
+    err.position = position;
+    err.length = length;
+    if (hint) err.hint = hint;
+    return err;
   }
 
   parseExpression(): ExpressionNode {
@@ -230,7 +247,7 @@ class Parser {
       this.pos++;
     }
     const name = this.input.substring(start, this.pos);
-    if (!name) throw new Error(`Unexpected character at position ${this.pos}: '${this.peek()}'`);
+    if (!name) throw this.error(`Unexpected character at position ${this.pos}: '${this.peek()}'`, this.pos, 1);
 
     this.skipWhitespace();
 
@@ -285,8 +302,14 @@ class Parser {
 
   expect(char: string): void {
     if (this.input[this.pos] !== char) {
-      throw new Error(
-        `Expected '${char}' at position ${this.pos}, got '${this.input[this.pos] || "EOF"}'`
+      throw this.error(
+        `Expected '${char}' at position ${this.pos}, got '${this.input[this.pos] || "EOF"}'`,
+        this.pos,
+        1,
+        char === ")" ? "Check for missing closing parenthesis" :
+        char === '"' ? "Check for unclosed string literal" :
+        char === "'" ? "Check for unclosed string literal" :
+        undefined
       );
     }
     this.pos++;

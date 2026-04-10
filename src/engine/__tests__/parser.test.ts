@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { parse } from "../parser";
+import type { ParseError } from "../../types/expression";
 
 describe("parser", () => {
   describe("existing syntax (regression)", () => {
@@ -212,6 +213,58 @@ describe("parser", () => {
         name: "String.toUpperCase",
         arguments: [{ type: "literal", value: "hello" }],
       });
+    });
+  });
+
+  describe("structured parse errors", () => {
+    it("provides position and length for unexpected character", () => {
+      try {
+        parse("user.email @@ something");
+        expect.fail("should have thrown");
+      } catch (e) {
+        const err = e as ParseError;
+        expect(err.message).toContain("Unexpected");
+        expect(err.position).toBe(11);
+        expect(err.length).toBeGreaterThanOrEqual(1);
+      }
+    });
+
+    it("provides position for unclosed string", () => {
+      try {
+        parse('"hello');
+        expect.fail("should have thrown");
+      } catch (e) {
+        const err = e as ParseError;
+        expect(err.position).toBeDefined();
+        expect(typeof err.position).toBe("number");
+      }
+    });
+
+    it("provides position for missing closing paren", () => {
+      try {
+        parse("String.toUpperCase(user.email");
+        expect.fail("should have thrown");
+      } catch (e) {
+        const err = e as ParseError;
+        expect(err.message).toContain(")");
+        expect(err.position).toBeDefined();
+      }
+    });
+
+    it("single quotes work correctly (not an error)", () => {
+      const result = parse("'hello'");
+      expect(result).toEqual({ type: "literal", value: "hello" });
+    });
+
+    it("provides position for trailing characters", () => {
+      try {
+        parse("user.email user.name");
+        expect.fail("should have thrown");
+      } catch (e) {
+        const err = e as ParseError;
+        expect(err.position).toBe(11);
+        expect(err.message).toContain("Unexpected");
+      }
     });
   });
 
